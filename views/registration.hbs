@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="./../style/registration.css">
+</head>
+<body>
+  <div class="reg">
+    <form method="POST" class="reg-form">
+      <input id="login" type="text" placeholder="Введите логин">
+      <input id="pas" type="password" placeholder="Введите пароль">
+      <input id="repeat-pas" type="password" placeholder="Повторите пароль">
+      <input id="createUser" type="submit" value="Создать пользователя">
+    </form>
+  </div>
+</body>
+
+<style>
+  *,body{
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+.reg{
+  background: aquamarine;
+  height: 100%;
+}
+
+.reg-form{
+  width: 50vw;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  margin: 0 auto;
+}
+</style>
+
+<script>
+  let create = document.querySelector('#createUser');
+  console.log(create)
+  create.addEventListener("click",
+   e => {
+    e.preventDefault();
+    const login = document.querySelector('#login')
+    const pas = document.querySelector('#pas')
+    const repeatPas = document.querySelector('#repeat-pas')
+    if (pas.value == repeatPas.value && pas.value !='' ){
+      createUser(login, pas)
+    }
+    else alert('пароли не совпадают')
+  })
+
+  async function createUser(login,pas){
+    const response = await fetch("registration/api", {
+      method: "POST",
+      headers: 
+      {"Accept" : "application/json",
+       "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        login: login.value,
+        password: pas.value,
+      })
+    })
+  }
+</script>
+
+
+</html>

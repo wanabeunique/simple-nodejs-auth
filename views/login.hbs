@@ -1,0 +1,68 @@
+<div class="login">
+    <form method="POST" class="reg-form">
+      <input id="login" type="text" placeholder="Введите логин">
+      <input id="pas" type="password" placeholder="Введите пароль">
+      <input type="submit" value="Войти" id="loginBtn">
+    </form>
+</div>
+
+<style>
+  *,body{
+    box-sizing: border-box;
+    margin: 0;
+  }
+
+.login{
+  background: aqua;
+  height: 100%;
+}
+
+.reg-form{
+  width: 50vw;
+  height: 50vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  justify-content: center;
+  margin: 0 auto;
+}
+</style>
+
+
+<script>
+  let send = document.querySelector('#loginBtn');
+  console.log(send)
+  send.addEventListener("click",
+   e => {
+    e.preventDefault();
+    const login = document.querySelector('#login')
+    const pas = document.querySelector('#pas')
+    alert('Запрос отправлен')
+    loginUser(login, pas)
+  })
+
+  async function loginUser(login,pas){
+
+    const response = await fetch("login/api", {
+      method: "POST",
+      headers: 
+      {"Accept" : "application/json",
+       "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        login: login.value,
+        password: pas.value,
+      })
+    })
+    if (response.ok){
+      try{
+        res = await response.json()
+        alert(`Добро пожаловать ${res[0].login}, Вы успешно вошли`)
+      }
+      catch(e){
+        alert('Неправильный логин или пароль')
+      }
+    }
+  }
+</script>
